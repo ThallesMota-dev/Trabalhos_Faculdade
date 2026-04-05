@@ -24,12 +24,19 @@
 
 % --- Pacotes necessários ----------------------------------------------------
 \usepackage{graphicx}          % inserir imagens
+\usepackage[brazil]{babel}
 \usepackage{fancyhdr}          % cabeçalho/rodapé customizado
 \usepackage{xcolor}            % cores
 \usepackage{hyperref}          % links clicáveis
 \usepackage{tikz}              % desenhos (usado na linha decorativa)
 \usepackage{amsmath, amssymb}  % símbolos matemáticos (útil para Algoritmos)
 \usepackage{lastpage}          % referência à última página
+
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{iniciofim} = [ellipse, draw, minimum width=3cm, minimum height=1cm, text centered]
+\tikzstyle{processo} = [rectangle, draw, minimum width=5cm, minimum height=1cm, text centered]
+\tikzstyle{seta} = [->, thick]
+\tikzstyle{decisao} = [diamond, minimum width=3.5cm, minimum height=2cm, text centered, draw=black]
 
 % --- Cores institucionais UFMT ---------------------------------------------
 \definecolor{ufmtAzul}{RGB}{0, 51, 102}       % azul escuro institucional
@@ -41,7 +48,7 @@
 \newcommand{\Disciplina}{Algoritmos 1}
 \newcommand{\Professora}{Profª. Rafaela Souza Francisco}
 \newcommand{\Curso}{Bacharelado em Ciência da Computação}
-\newcommand{\Instituicao}{UFMT — Campus de Cuiabá}
+\newcommand{\Instituicao}{UFMT — Universidade Federal de Mato Grosso}
 \newcommand{\Semestre}{2026/1}
 \renewcommand{\abstractname}{Resumo}
 % ← Semestre atual
@@ -144,46 +151,221 @@
 \begin{document}
 
 \begin{center}
-  {\Large\bfseries\color{ufmtAzul} Título do Trabalho}\\[8pt]
-  {\large \NomeAluno}\\[4pt]
+  {\Large\bfseries\color{ufmtAzul} Tarefa: Algoritmos e Fluxogramas}\\[6pt]
+  {\large \NomeAluno}\\[3pt]
   {\normalsize\color{ufmtCinza} \today}
 \end{center}
 
 \vspace{0.5cm}
 
 \begin{abstract}
-    \textbf{resumo}
+    \textbf{    Esta tarefa tem como objetivo apresentar e aplicar conceitos 
+    fundamentais de algoritmos e lógica de programação por meio de quatro 
+    problemas simples. Ao longo da tarefa, Serão exploradas estruturas condicionais com base na
+análise de fluxogramas, permitindo a compreensão do processo de tomada
+de decisão em algoritmos.}
 
-    \vspace{0.1cm}
 \end{abstract}
 
-\noindent\textbf{Palavras-chave:} LaTeX, resumo, exemplo.
+\noindent\textbf{Palavras-chave: Algoritmos; Fluxogramas; Soluções Computacionais.} .
 
-\section{Introdução}
-    Este é um documento de exemplo para demonstrar o rodapé institucional
-configurado para a disciplina de \textbf{\Disciplina}, ministrada pela
-\textbf{\Professora}, no curso de \Curso\ da \Instituicao.
+\section*{Introdução}
+       Neste trabalho, serão abordados quatro exercícios que exploram conceitos 
+    fundamentais para a criação de algoritmos e fluxogramas, permitindo a 
+    compreensão prática de como construir soluções lógicas e eficientes para os
+    mais diversos problemas.
 
-\section{Exemplo de Pseudocódigo}
-Para ilustrar o uso em trabalhos de Algoritmos:
+\section*{Exercício 1 - Calcular o troco de uma compra}
 
-\begin{verbatim}
-  função busca_binaria(vetor A, inteiro chave):
-      esquerda ← 0
-      direita  ← tamanho(A) - 1
-      enquanto esquerda <= direita:
-          meio ← (esquerda + direita) / 2
-          se A[meio] == chave:
-              retorne meio
-          senão se A[meio] < chave:
-              esquerda ← meio + 1
-          senão:
-              direita ← meio - 1
-      retorne -1
-\end{verbatim}
+\begin{center}
+\begin{tikzpicture}[node distance=1.333cm]
+ 
+% Nós
+\node (inicio) [iniciofim] {Início};
+\node (lerpreco) [processo, below of=inicio] {Ler preço do produto};
+\node (lervalor) [processo, below of=lerpreco] {Ler valor entregue pelo cliente};
+\node (suficiente) [decisao, below of=lervalor, yshift=-1.333cm] {Valor suficiente?};
+\node (troco) [processo, below right of=suficiente, xshift=1.5cm, yshift=-1.5cm] {Troco $=$ valor $-$ preço};
+\node (insuficiente) [processo, below left of=suficiente, xshift=-1.5cm, yshift=-1.5cm] {Valor insuficiente};
+\node (exibir) [processo, below of=troco] {Exibir o troco};
+\node (fim) [iniciofim, below of=suficiente, yshift=-3.8cm] {Fim};
+ 
+% Setas
+\draw [seta] (inicio) -- (lerpreco);
+\draw [seta] (lerpreco) -- (lervalor);
+\draw [seta] (lervalor) -- (suficiente);
+\draw [seta] (suficiente.east) -- ++(1,0) node[above, midway] {Sim} -| (troco);
+\draw [seta] (suficiente.west) -- ++(-1,0) node[above, midway] {Não} -| (insuficiente);
+\draw [seta] (troco) -- (exibir);
+\draw [seta] (exibir) |- (fim);
+\draw [seta] (insuficiente) |- (fim);
+ 
+\end{tikzpicture}
+\end{center}
 
-\section{Conclusão}
-O rodapé aparece em todas as páginas com as informações institucionais,
-número da página e espaço reservado para o logo da UFMT.
+O primeiro exercício consiste em calcular o troco de uma compra, onde o 
+    usuário deve informar o valor total da compra e o valor pago. 
+    O algoritmo deve verificar se o valor pago é suficiente para cobrir a compra e, 
+    caso seja, \textbf{calcular e exibir o troco}. Caso contrário, deve informar que o 
+    valor é insuficiente(exemplificado na seção "Comandos de Entrada e Saída" do capítulo 2 de:\cite{forbellone2005}).
+
+O algoritmo inicia com o passo \textbf{Início}. Em seguida, é realizada a 
+leitura do \textbf{preço do produto}. Logo após, o programa solicita e lê 
+o \textbf{valor entregue pelo cliente}.
+
+    Com esses dados, o algoritmo realiza um cálculo simples: determina-se o 
+\textbf{troco} por meio da subtração entre o valor entregue e o preço do 
+produto, ou seja, \textbf{troco $=$ valor $-$ preço}. Após o cálculo, o resultado
+é apresentado ao usuário por meio da exibição do \textbf{valor do troco}. 
+Por fim, o algoritmo é encerrado no passo \textbf{Fim}.
+
+    
+
+\section*{Exercício 2 - Verificar se um número é par ou ímpar }
+
+\begin{center}
+\begin{tikzpicture}[node distance=1.5cm]
+% Nós
+\node (inicio) [iniciofim] {Início};
+\node (entrada) [processo, below of=inicio] {Insira um número};
+\node (decisao) [decisao, below of=entrada, yshift=-1cm] {NUM \% 2 = 0};
+\node (impar) [processo, below left of=decisao, xshift=-3cm] {ÍMPAR};
+\node (par) [processo, below right of=decisao, xshift=3cm] {PAR};
+\node (fim) [iniciofim, below of=decisao, yshift=-1.5cm] {Fim};
+% Setas
+\draw [seta] (inicio) -- (entrada);
+\draw [seta] (entrada) -- (decisao);
+\draw [seta] (decisao) -| node[above, pos=0.25] {NÃO} (impar);
+\draw [seta] (decisao) -| node[above, pos=0.25] {Sim} (par);
+\draw [seta] (impar) |- (fim);
+\draw [seta] (par) |- (fim);
+\end{tikzpicture}
+\end{center}
+
+     O segundo exercício tem como objetivo verificar se um número é \textbf{par ou ímpar}.
+     O usuário deve inserir um número inteiro, e o algoritmo deve determinar se 
+     ele é \textbf{par (divisível por 2)} ou \textbf{ímpar (não divisível por 2)}, exibindo a 
+     resposta correspondente a cada um dos casos.
+     
+    O algoritmo inicia com o passo \textbf{Início}. Em seguida, é realizada a leitura de um número inteiro informado pelo usuário. Após isso, o programa faz uma verificação: calcula-se o resto da \textbf{divisão desse número por 2}(exemplificado na seção 1.1 do capítulo 1 de:\cite{guidorizzi2001}).
+    Se o resto da divisão for igual a zero, conclui-se que o número é \textbf{Par}, e essa informação é
+    exibida ao usuário. Caso contrário, se o resto for diferente de zero, o número é considerado \textbf{Ímpar}, e essa mensagem é apresentada. Por fim, o algoritmo é encerrado no passo \textbf{Fim}.
+\pagebreak
+
+\section*{Exercício 3 - Encontrar o maior entre três números}
+
+\begin{center}
+\begin{tikzpicture}[node distance=1.333cm]
+
+% Nós
+\node (inicio) [iniciofim] {Início};
+\node (ler) [processo, below of=inicio] {Ler A, B, C};
+\node (ab) [decisao, below of=ler, yshift=-1cm] {A $>$ B?};
+\node (ac) [decisao, below of=ab, xshift=-3cm, yshift=-1.5cm] {A $>$ C?};
+\node (bc) [decisao, below of=ab, xshift=3cm, yshift=-1.5cm] {B $>$ C?};
+\node (maiorA) [processo, below of=ac, xshift=-2.5cm, yshift=-1.5cm] {Maior $=$ A};
+\node (maiorC1) [processo, below of=ac, xshift=2.5cm, yshift=-1.5cm] {Maior $=$ C};
+\node (maiorB) [processo, below of=bc, xshift=-2.5cm, yshift=-3cm] {Maior $=$ B};
+\node (maiorC2) [processo, below of=bc, xshift=2.5cm, yshift=-3cm] {Maior $=$ C};
+\node (exibir) [processo, below of=ab, yshift=-8cm] {Exibir o maior};
+\node (fim) [iniciofim, below of=exibir] {Fim};
+ 
+% Setas principais
+\draw [seta] (inicio) -- (ler);
+\draw [seta] (ler) -- (ab);
+ 
+% A > B?
+\draw [seta] (ab.west) -- node[above] {Sim} (ac.north |- ab.west) -- (ac);
+\draw [seta] (ab.east) -- node[above] {Não} (bc.north |- ab.east) -- (bc);
+ 
+% A > C?
+\draw [seta] (ac.west) -- node[above] {Sim} (maiorA.north |- ac.west) -- (maiorA);
+\draw [seta] (ac.east) -- node[above] {Não} (maiorC1.north |- ac.east) -- (maiorC1);
+ 
+% B > C?
+\draw [seta] (bc.west) -- node[above] {Sim} (maiorB.north |- bc.west) -- (maiorB);
+\draw [seta] (bc.east) -- node[above] {Não} (maiorC2.north |- bc.east) -- (maiorC2);
+ 
+% Convergência para Exibir
+\draw [seta] (maiorA) |- (exibir);
+\draw [seta] (maiorC1) |- (exibir.north);
+\draw [seta] (maiorB) |- (exibir.north);
+\draw [seta] (maiorC2) |- (exibir);
+ 
+\draw [seta] (exibir) -- (fim);
+ 
+\end{tikzpicture}
+\end{center}
+
+O terceiro exercício tem como objetivo encontrar o \textbf{maior entre três números inteiros}. O usuário deve inserir \textbf{três números inteiros ($A, B, C$)}, e o algoritmo deve compará-los entre si para determinar qual deles possui o maior valor, exibindo a resposta correspondente(exemplificado na seção "Seleção Encadeada" do capítulo 3 de:
+\cite{forbellone2005}). 
+
+O algoritmo inicia com o passo \textbf{Início}. Em seguida, são realizadas as leituras de três números inteiros, informados pelo usuário, armazenados nas \textbf{variáveis ($A, B, C$)}.
+Após a leitura dos valores, o programa inicia uma série de verificações utilizando decisões encadeadas. 
+
+Primeiramente, verifica-se se o $A$ é maior que $B$ e também maior que $C$. 
+Caso essa condição seja verdadeira, conclui-se que o $A$ é o maior, e essa informação é exibida ao usuário. Caso contrário, o algoritmo verifica se $B$ é maior que $A$ e também maior que $C$. Se essa condição for satisfeita, $B$ é considerado o maior, e o resultado é apresentado. Se nenhuma das condições anteriores for verdadeira, conclui-se que $C$ possui o maior valor entre os três, sendo então exibido ao usuário.
+Por fim, o algoritmo é encerrado no passo \textbf{Fim}.
+
+\section*{Exercício 4 - Contar de 1 até N}
+
+\begin{center}
+\begin{tikzpicture}[node distance=1.333cm]
+
+% Nós
+\node (inicio) [iniciofim] {Início};
+\node (ler) [processo, below of=inicio] {Ler N};
+\node (init) [processo, below of=ler] {i $\leftarrow$ 1};
+\node (cond) [decisao, below of=init, yshift=-1cm] {i $\leq$ N?};
+\node (exibir) [processo, below of=cond, xshift=3cm, yshift=-1.5cm] {Exibir i};
+\node (incremento) [processo, below of=exibir] {i $\leftarrow$ i $+$ 1};
+\node (fim) [iniciofim, below of=cond, xshift=-3cm, yshift=-1.5cm] {Fim};
+
+% Setas principais
+\draw [seta] (inicio) -- (ler);
+\draw [seta] (ler) -- (init);
+\draw [seta] (init) -- (cond);
+
+% Decisão
+\draw [seta] (cond.east) -- node[above] {Sim} (exibir.north |- cond.east) -- (exibir);
+\draw [seta] (cond.west) -- node[above] {Não} (fim.north |- cond.west) -- (fim);
+
+% Exibir → Incrementar
+\draw [seta] (exibir) -- (incremento);
+
+% Loop: Incrementar volta para a condição
+\draw [seta] (incremento.south) -- ++(0,-0.8) -| (cond.south);
+
+\end{tikzpicture}
+\end{center}
+
+    O quarto exercício tem como objetivo contar todos os \textbf{números inteiros de 1 até $N$}.
+O usuário deve inserir um \textbf{número inteiro positivo $N$}, e o algoritmo deve apresentar
+todos os valores de 1 até $N$, um por vez, utilizando uma estrutura de repetição(exemplificado na seção "Estruturas de Repetição" do capítulo 3 de:\cite{forbellone2005}).
+
+O algoritmo inicia com o passo \textbf{Início}. Em seguida, é realizada a leitura de um número
+inteiro positivo $N$, informado pelo usuário. Após isso, o programa inicializa uma \textbf{variável
+chamada $i$} com o valor 1.
+
+Em seguida, é feita uma verificação: enquanto o \textbf{valor de $i$ for menor ou igual a $N$}, o
+algoritmo executa um conjunto de ações. Dentro dessa estrutura de repetição, o valor atual
+de $i$ é exibido ao usuário. Logo após, a variável $i$ é incrementada em uma unidade.
+Esse processo se repete continuamente até que \textbf{$i$ ultrapasse o valor de $N$}. Quando a
+condição deixa de ser satisfeita, o algoritmo encerra sua execução no passo \textbf{Fim}.
+\pagebreak
+
+\section*{Conclusão}
+       Portanto, perante os exercícios propostos, foi possível aplicar os conceitos de 
+    algoritmos e fluxogramas para resolver problemas práticos, fortalecendo o 
+    raciocínio lógico e a capacidade de organizar ideias na construção de 
+    soluções computacionais. Além disso, os exercícios Contribuíram diretamente para o fortalecimento 
+    do pensamento computacional, especialmente na tomada de decisões lógicas 
+    e na execução de processos de forma sequencial e eficiente.
+       Dessa forma, os exercícios cumpriram um papel importante na 
+    consolidação dos conhecimentos iniciais em algoritmos, servindo como 
+    base para o aprendizado de conceitos mais avançados na lógica de programação.
+
+\bibliographystyle{abntex2-alf}  % ou plain, ieeetr, etc.
+\bibliography{references}
 
 \end{document}
