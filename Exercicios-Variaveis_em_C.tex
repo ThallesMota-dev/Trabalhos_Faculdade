@@ -177,25 +177,68 @@
 \vspace{0.5cm}
 
 \begin{abstract}
-    \textbf{Este trabalho apresenta duas soluções para o problema clássico de troca de valores entre duas variáveis inteiras na linguagem C. A primeira abordagem utiliza uma variável auxiliar temporária para preservar um dos valores durante a permutação. A segunda abordagem realiza a troca exclusivamente por meio de operações aritméticas de soma e subtração, dispensando memória adicional. Ambas as implementações demonstram conceitos fundamentais de manipulação de variáveis, atribuição e expressões aritméticas em programação estruturada.}
+    \textbf{Este trabalho apresenta duas soluções para o problema clássico de 
+    troca de valores entre duas variáveis inteiras na linguagem C. A primeira 
+    abordagem utiliza uma variável auxiliar temporária para preservar um dos 
+    valores durante a permutação. A segunda abordagem realiza a troca 
+    exclusivamente por meio de operações aritméticas de soma e subtração, 
+    dispensando memória adicional. Ambas as implementações demonstram conceitos 
+    fundamentais de manipulação de variáveis, atribuição e expressões aritméticas 
+    em programação estruturada.}
 \end{abstract}
 
-\noindent\textbf{Palavras-chave: troca de variáveis; variável auxiliar; operações aritméticas; linguagem C; atribuição} .
+\noindent\textbf{Palavras-chave: troca de variáveis; variável auxiliar; 
+operações aritméticas; linguagem C; atribuição} .
 
 \section*{Introdução}
-  A manipulação de variáveis constitui uma das operações mais elementares no estudo de programação de computadores. Compreender como os dados são armazenados, acessados e modificados na memória é um passo essencial para o desenvolvimento do raciocínio lógico-computacional exigido na formação em Ciência da Computação.
+  A manipulação de variáveis constitui uma das operações mais elementares no 
+  estudo de programação de computadores. Compreender como os dados são 
+  armazenados, acessados e modificados na memória é um passo essencial para o 
+  desenvolvimento do raciocínio lógico-computacional exigido na formação em 
+  Ciência da Computação.
 
 
-Dentre os problemas introdutórios frequentemente propostos, a troca de valores entre duas variáveis ocupa posição de destaque por sua simplicidade aparente e pela riqueza conceitual que oferece. Embora o enunciado seja direto — permutar o conteúdo(trocar os valores) de duas variáveis inteiras — sua resolução mobiliza conceitos fundamentais como declaração de variáveis, comando de atribuição, uso de variáveis auxiliares e construção de expressões aritméticas.
+Dentre os problemas introdutórios frequentemente propostos, a troca de valores 
+entre duas variáveis ocupa posição de destaque por sua simplicidade aparente e 
+pela riqueza conceitual que oferece. Embora o enunciado seja direto — permutar 
+o conteúdo(trocar os valores) de duas variáveis inteiras — sua resolução mobiliza 
+conceitos fundamentais como declaração de variáveis, comando de atribuição, 
+uso de variáveis auxiliares e construção de expressões aritméticas.
 
 
-O presente trabalho aborda duas estratégias distintas para a solução desse problema na linguagem C. A primeira emprega uma variável temporária como espaço intermediário de armazenamento, garantindo que nenhum valor seja perdido durante o processo de troca. A segunda estratégia elimina a necessidade de memória adicional ao explorar propriedades das operações de soma e subtração para rearranjar os valores utilizando apenas as duas variáveis originais.
+O presente trabalho aborda duas estratégias distintas para a solução desse 
+problema na linguagem C. A primeira emprega uma variável temporária como espaço 
+intermediário de armazenamento, garantindo que nenhum valor seja perdido durante 
+o processo de troca. A segunda estratégia elimina a necessidade de memória 
+adicional ao explorar propriedades das operações de soma e subtração para 
+rearranjar os valores utilizando apenas as duas variáveis originais.
 
 
-O objetivo é não apenas apresentar as implementações, mas também discutir as vantagens, limitações e os conceitos de programação envolvidos em cada abordagem, contribuindo para a consolidação dos fundamentos de algoritmos em uma programação computacional estruturada.
+O objetivo é não apenas apresentar as implementações, mas também discutir as 
+vantagens, limitações e os conceitos de programação envolvidos em cada abordagem, 
+contribuindo para a consolidação dos fundamentos de algoritmos em uma programação 
+computacional estruturada.
 \pagebreak
 
 \section*{Estratégia 1 - Troca com variável auxiliar}
+
+
+A primeira solução utiliza uma variável auxiliar temporária chamada $aux$ para 
+intermediar a troca. O processo ocorre em três passos sequenciais: primeiro, o 
+valor de $a$ é copiado para temp; em seguida, a recebe o valor de $b$; por fim, 
+$b$ recebe o valor armazenado em $aux$, que corresponde ao valor original de $a$.
+
+
+Essa abordagem é considerada o método padrão de troca de variáveis por sua 
+simplicidade e confiabilidade. O custo adicional de memória é mínimo — apenas 
+uma variável inteira extra — e não há risco de erros numéricos, independentemente 
+dos valores envolvidos. Tais conceitos, são demonstrados na seção 2.1.3 do livro 
+citado:\cite{medina2006}.
+
+
+O Código 1 apresenta a implementação completa desta solução.
+
+
 \begin{lstlisting}[language=C, caption={Troca com variável auxiliar}, label={lst:q1}]
 /* =====================================================
    Estrategia:
@@ -227,9 +270,30 @@ int main() {
 \end{lstlisting}
 
 
+
     
 
 \section*{Estratégia 2 - Troca sem variável auxiliar}
+
+A segunda solução elimina a necessidade de uma terceira variável ao explorar uma 
+propriedade das operações de soma e subtração: se $a$ recebe $a+b$, então $a-b$ 
+recupera o valor original de $a$, e uma segunda subtração recupera o valor 
+original de $b$.
+
+
+Concretamente, o processo se dá em três passos: $a = a+b$ faz com que $a$ passe 
+a conter a soma dos dois valores; $b = a-b$ atribui a $b$. Ao final, os valores 
+estão trocados sem uso de memória adicional.
+
+
+Embora elegante, essa técnica apresenta uma limitação prática: se a soma de $a$ 
+e $b$ ultrapassar o limite do tipo $int$(aproximadamente $\pm2,15 \times 10^9$ 
+em em arquiteturas de 32 bits), ocorrerá *overflow*, produzindo resultados 
+incorretos. Portanto, sua solução está proposta no seguinte na seção 1.3 do 
+sesguinte livro:\cite{knuth1997}.
+
+
+O Código 2 apresenta a implementação completa desta solução.
 
 \begin{lstlisting}[language=C, caption={Troca sem variável auxiliar}, label={lst:q2}]
 /* ====================================================
@@ -271,16 +335,34 @@ int main() {
 \section*{Conclusão}
 
 
-O presente trabalho abordou o problema clássico de troca de valores entre duas variáveis inteiras na linguagem C, apresentando duas soluções distintas que, embora conduzam ao mesmo resultado, diferem em estratégia algoritmica e nos conceitos que mobilizam.
+O presente trabalho abordou o problema clássico de troca de valores entre duas 
+variáveis inteiras na linguagem C, apresentando duas soluções distintas que, 
+embora conduzam ao mesmo resultado, diferem em estratégia algoritmica e nos 
+conceitos que mobilizam.
 
        
-A primeira solução, baseada em uma variável auxiliar, destaca-se pela clareza e segurança. Sua lógica é intuitiva e de fácil compreensão, o que a torna a abordagem recomendada na maioria dos cenários práticos. A introdução de uma terceira variável como espaço temporário de armazenamento ilustra de forma didática o funcionamento do comando de atribuição e o princípio de que uma atribuição sobrescreve o valor anterior de uma variável.
+A primeira solução, baseada em uma variável auxiliar, destaca-se pela clareza 
+e segurança. Sua lógica é intuitiva e de fácil compreensão, o que a torna a 
+abordagem recomendada na maioria dos cenários práticos. A introdução de uma 
+terceira variável como espaço temporário de armazenamento ilustra de forma 
+didática o funcionamento do comando de atribuição e o princípio de que uma 
+atribuição sobrescreve o valor anterior de uma variável.
 
 
-A segunda solução, que dispensa memória adicional ao utilizar exclusivamente operações de soma e subtração, demonstra como propriedades aritméticas podem ser exploradas para resolver problemas de manipulação de dados. Embora elegante, essa abordagem apresenta a limitação de possível "overflow" quando os valores envolvidos são muito grandes, o que deve ser considerado em aplicações reais.
+A segunda solução, que dispensa memória adicional ao utilizar exclusivamente 
+operações de soma e subtração, demonstra como propriedades aritméticas podem 
+ser exploradas para resolver problemas de manipulação de dados. Embora elegante, 
+essa abordagem apresenta a limitação de possível "overflow" quando os valores 
+envolvidos são muito grandes, o que deve ser considerado em aplicações reais.
 
 
-Ambas as implementações reforçam conceitos fundamentais trabalhados na disciplina de Algoritmos I, como declaração de variáveis, operador de atribuição, entrada e saída de dados com "scanf" e "printf", e construção de expressões aritméticas. A análise comparativa das duas abordagens contribui para o desenvolvimento do pensamento computacional, evidenciando que um mesmo problema pode admitir múltiplas soluções com diferentes compromissos entre simplicidade, eficiência e robustez.
+Ambas as implementações reforçam conceitos fundamentais trabalhados na 
+disciplina de Algoritmos I, como declaração de variáveis, operador de 
+atribuição, entrada e saída de dados com "scanf" e "printf", e construção de 
+expressões aritméticas. A análise comparativa das duas abordagens contribui 
+para o desenvolvimento do pensamento computacional, evidenciando que um mesmo 
+problema pode admitir múltiplas soluções com diferentes compromissos entre 
+simplicidade, eficiência e robustez.
 
 \bibliographystyle{abntex2-alf}  % ou plain, ieeetr, etc.
 \bibliography{references}
