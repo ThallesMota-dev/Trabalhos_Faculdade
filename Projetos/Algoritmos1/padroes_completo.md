@@ -533,7 +533,7 @@ for (i = 0; i < n; i++) {
 | 9 | Flag | `existe = 0/1` | Verificar condição no loop |
 | 10 | Menu | `do/while + switch` | Programa interativo |
 | 11 | Struct | `typedef struct` | Entidade com campos |
-| 12 | Remoção | Substituir pelo último | Excluir de vetor |
+| 12 | Remoção | `Substituir pelo último` | Excluir de vetor |
 | 13 | strcmp | `strcmp(a,b) == 0` | Comparar strings |
 | 14 | scanf/printf | `&` e `%` | Toda leitura e impressão |
 | 15 | Busca Linear | `for` + flag | Procurar valor em vetor/matriz |
