@@ -1,9 +1,3 @@
-# Faça um algoritmo que calcule a média ponderada de 40 alunos de
-# uma classe sendo que cada aluno possui 4 notas com os seus
-# respectivos pesos : 2,3,2,3, após mostre o resultado final de cada um
-# dos alunos e diga se ele foi aprovado ou reprovado (a média final é
-# 6,0).
-
 class escola:
     nome = None
     nota = [None] * 4
